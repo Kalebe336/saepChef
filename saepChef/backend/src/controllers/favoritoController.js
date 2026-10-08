@@ -6,7 +6,7 @@ export const alternarFavorito = async (req, res) => {
     const existe = await repo.buscarFavorito(idUsuario, idReceita);
 
     if (existe) {
-      await repo.removerFavorito(idUsuario, idReceita);
+      await repo.delete(idReceita);
       return res.status(200).json({ ativado: false });
     } else {
       await repo.adicionarFavorito(idUsuario, idReceita);

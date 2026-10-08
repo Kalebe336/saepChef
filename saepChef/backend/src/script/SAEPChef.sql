@@ -41,7 +41,6 @@ ALTER TABLE IF EXISTS public.tb_receita
     ON DELETE NO ACTION
     NOT VALID;
 
-
 ALTER TABLE IF EXISTS public.tb_favoritar
     ADD FOREIGN KEY (id_usuario)
     REFERENCES public.tb_usuario (id) MATCH SIMPLE
@@ -49,19 +48,17 @@ ALTER TABLE IF EXISTS public.tb_favoritar
     ON DELETE NO ACTION
     NOT VALID;
 
-
 ALTER TABLE IF EXISTS public.tb_favoritar
     ADD FOREIGN KEY (id_receita)
     REFERENCES public.tb_receita (id_receita) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
-END;
 
-
+-- Insere os usuários com a senha entre aspas ('123456')
 INSERT INTO public.tb_usuario (
     id,
-	nome,
+    nome,
     nome_usuario,
     email,
     senha,
@@ -71,12 +68,31 @@ INSERT INTO public.tb_usuario (
     updated_at
 )
 VALUES
-(1,'Chef Marco Bianchi','chef1','chef1@saepchef.com',123456,'chef1.jpg','chef','2026-01-10 09:15:00','2026-01-10 09:15:00'),
-(2,'Chef Ana Ferreira','chef2','chef2@saepchef.com',123456,'chef2.jpg','chef','2026-01-12 10:30:00','2026-01-12 10:30:00'),
-(3,'Chef Lucas Tanaka','chef3','chef3@saepchef.com',123456,'chef3.jpg','chef','2026-01-14 14:20:00','2026-01-14 14:20:00'),
-(4,'Mariana Costa','usuario1','usuario1@gmail.com',123456,'usuario1.jpg','comum','2026-01-16 08:45:00','2026-01-16 08:45:00'),
-(5,'Rafael Souza','usuario2','usuario2@gmail.com',123456,'usuario2.jpg','comum','2026-01-18 11:00:00','2026-01-18 11:00:00'),
-(6,'Beatriz Lima','usuario3','usuario3@gmail.com',123456,'usuario3.jpg','comum','2026-01-20 16:10:00','2026-01-20 16:10:00');
+(1,'Chef Marco Bianchi','chef1','chef1@saepchef.com','123456','chef1.jpg','chef','2026-01-10 09:15:00','2026-01-10 09:15:00'),
+(2,'Chef Ana Ferreira','chef2','chef2@saepchef.com','123456','chef2.jpg','chef','2026-01-12 10:30:00','2026-01-12 10:30:00'),
+(3,'Chef Lucas Tanaka','chef3','chef3@saepchef.com','123456','chef3.jpg','chef','2026-01-14 14:20:00','2026-01-14 14:20:00'),
+(4,'Mariana Costa','usuario1','usuario1@gmail.com','123456','usuario1.jpg','comum','2026-01-16 08:45:00','2026-01-16 08:45:00'),
+(5,'Rafael Souza','usuario2','usuario2@gmail.com','123456','usuario2.jpg','comum','2026-01-18 11:00:00','2026-01-18 11:00:00'),
+(6,'Beatriz Lima','usuario3','usuario3@gmail.com','123456','usuario3.jpg','comum','2026-01-20 16:10:00','2026-01-20 16:10:00');
 
-SELECT * FROM public.tb_usuario 
+SELECT * FROM public.tb_usuario;
 
+
+INSERT INTO public.tb_receita (
+    id_receita,
+    titulo_receita,
+    origem_receita,
+    id_usuario,
+    url_imagem,
+    created_at,
+    updated_at
+)
+VALUES
+(1,'Feijao com Banana','Parana',1,'nada','2026-01-10 09:15:00','2026-01-10 09:15:00'),
+(2,'Arroz e macarrao','Para',3,'nada','2026-01-10 09:15:00','2026-01-10 09:15:00'),
+(3,'Leite quente','Santa catarina',4,'nada','2026-01-10 09:15:00','2026-01-10 09:15:00'),
+(4,'Batata com limao','Curutiba',1,'nada','2026-01-10 09:15:00','2026-01-10 09:15:00'),
+(5,'agua com gas','Parana',2,'nada','2026-01-10 09:15:00','2026-01-10 09:15:00'),
+(6,'macarrao com salsicha','Rio Grande do Sul',3,'nada','2026-01-10 09:15:00','2026-01-10 09:15:00');
+
+SELECT * FROM public.tb_receita;

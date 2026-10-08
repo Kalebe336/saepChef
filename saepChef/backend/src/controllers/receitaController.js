@@ -2,7 +2,7 @@ import * as repo from '../repositories/receitaRepository.js';
 
 export const listar = async (req, res) => {
   try {
-    const receitas = await repo.listarTodasReceitas();
+    const receitas = await repo.getReceitas();
     return res.status(200).json(receitas);
   } catch (err) {
     return res.status(500).json({ mensagem: 'Erro ao buscar receitas' });

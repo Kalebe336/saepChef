@@ -1,67 +1,51 @@
-import { usuarioRepository } from "../repositories/usuarioRepository.js";
+import { query } from "../config/db.js";
 
-export const usuarioController = {
+export const receitaRepository = {
 
-  async login(req, res) {
+    async getAll() {
 
-    try {
+        const result = await query(
+            "SELECT * FROM tb_receita"
+        );
 
-      const { email, senha } = req.body;
+        return result.rows;
+    },
 
-      if (!email) {
-        return res.status(400).json({
-          erro: "E-mail inválido ou vazio."
-        });
-      }
+    async getById(id) {
 
-      if (!senha) {
-        return res.status(400).json({
-          erro: "A senha é obrigatória e não pode estar vazia."
-        });
-      }
+        const result = await query(
+            "SELECT * FROM tb_receita WHERE id_receita = $1",
+            [id]
+        );
 
-      const usuario = await usuarioRepository.login(email, senha);
+        return result.rows[0];
+    },
 
-      if (!usuario) {
-        return res.status(404).json({
-          erro: "Usuário não encontrado ou senha incorreta."
-        });
-      }
+    async create(receita) {
 
-      return res.status(200).json({
-        id: usuario.id,
-        nome: usuario.nome,
-        nome_usuario: usuario.nome_usuario,
-        email: usuario.email,
-        imagem_usuario: usuario.imagem_usuario,
-        tipo: usuario.tipo
-      });
+        const {
+            id_receita,
+            titulo_receita,
+            origem_receita,
+            id_usuario,
+            url_imagem
+        } = receita;
 
-    } catch (error) {
+        const result = await query(
+            `INSERT INTO tb_receita
+            (id_receita, titulo_receita, origem_receita, id_usuario, url_imagem, created_at, updated_at)
+            VALUES ($1, $2, $3, $4, $5, $6, $6)
+            RETURNING *`,
+            [
+                id_receita,
+                titulo_receita,
+                origem_receita,
+                id_usuario,
+                url_imagem,
+                new Date().toISOString()
+            ]
+        );
 
-      console.error("Erro no login:", error);
-
-      return res.status(500).json({
-        erro: "Erro interno do servidor."
-      });
+        return result.rows[0];
     }
-  },
-
-  async getAllUsuarios(req, res) {
-
-    try {
-
-      const usuarios = await usuarioRepository.getAllUsuarios();
-
-      return res.status(200).json(usuarios);
-
-    } catch (error) {
-
-      console.error("Erro ao buscar usuários:", error);
-
-      return res.status(500).json({
-        erro: "Erro interno do servidor."
-      });
-    }
-  }
 };

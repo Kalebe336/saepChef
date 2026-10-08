@@ -1,6 +1,6 @@
 import { pool } from '../config/db.js';
 
-export const buscarFavorito = async (idUsuario, idReceita) => {
+export const getFavorito = async (idUsuario, idReceita) => {
   const query = 'SELECT * FROM public.tb_favoritar WHERE id_usuario = $1 AND id_receita = $2';
   const { rows } = await pool.query(query, [idUsuario, idReceita]);
   return rows[0];
